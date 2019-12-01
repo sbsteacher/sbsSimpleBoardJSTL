@@ -17,6 +17,10 @@
 		justify-content: center;
 		align-items: center;
 	}
+	
+	.f_red {
+		color: red;
+	}
 </style>
 </head>
 <body>
@@ -24,9 +28,9 @@
 		<div>
 			<form id="frm" action="login" method="post" onsubmit="return check()">
 				<div>아이디 : <input type="text" name="uid" value=""></div>
-				<div id="uidmsg"></div>
+				<div id="uidmsg" class="f_red"></div>
 				<div>비밀번호 : <input type="password" name="upw"></div>
-				<div id="upwmsg"></div>
+				<div id="upwmsg" class="f_red"></div>
 				<div>
 					<input type="submit" value="로그인">
 				</div>
@@ -35,18 +39,32 @@
 	</div>
 	<script>
 		function check() {
+			/*
+			var f_reds = document.getElementsByClassName('f_red')			
+			f_reds[0].innerHTML = '진짜???'
+			f_reds[1].innerHTML = 'ㅋㅋㅋㅋㅋ'
+			return false;
+			*/
+			var uidmsg = document.getElementById('uidmsg')
+			var upwmsg = document.getElementById('upwmsg')
+			uidmsg.innerHTML = ''
+			upwmsg.innerHTML = ''
+			
+			var isOk = true
+			
 			if(frm.uid.value == '') {
-				frm.uid.focus()
-				var msg = document.getElementById('uidmsg')
-				msg.innerHTML = '아이디를 입력해 주세요.'				
-				return false
+				frm.uid.focus()				
+				uidmsg.innerHTML = '아이디를 입력해 주세요.'
+				isOk = false
 			}
 			if(frm.upw.value == '') {
-				frm.upw.focus()
-				var msg = document.getElementById('upwmsg')
-				msg.innerHTML = '비밀번호를 입력해 주세요.'
-				return false
+				frm.upw.focus()				
+				upwmsg.innerHTML = '비밀번호를 입력해 주세요.'
+				isOk = false
 			}
+			
+			return isOk
+			
 		}
 	</script>
 </body>
