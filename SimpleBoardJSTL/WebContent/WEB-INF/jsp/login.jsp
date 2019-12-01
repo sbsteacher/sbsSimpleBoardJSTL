@@ -46,6 +46,10 @@
 		</c:if>
 	</div>
 	<script>
+		<c:if test="${alert != null}">
+			alert(${alert})
+		</c:if>
+	
 		function goToJoin() {
 			location.href='join'
 			return false

@@ -36,7 +36,7 @@
 				<div>확인비밀번호 : <input type="password" name="reupw"></div>
 				<div id="upwmsg" class="f_red"></div>
 				
-				<div>이름 : <input type="text" name="nm"></div>
+				<div>이름 : <input type="text" name="nm" value="${nm }"></div>
 				<div id="nmmsg" class="f_red"></div>
 				
 				<div>
@@ -57,17 +57,14 @@
 			return false
 		}
 	
-		function check() {
-			/*
-			var f_reds = document.getElementsByClassName('f_red')			
-			f_reds[0].innerHTML = '진짜???'
-			f_reds[1].innerHTML = 'ㅋㅋㅋㅋㅋ'
-			return false;
-			*/
-			var uidmsg = document.getElementById('uidmsg')
-			var upwmsg = document.getElementById('upwmsg')
-			uidmsg.innerHTML = ''
-			upwmsg.innerHTML = ''
+		function check() {			
+			var uidmsg = document.getElementById('uidmsg');
+			var upwmsg = document.getElementById('upwmsg');
+			var nmmsg = document.getElementById('nmmsg');
+			
+			uidmsg.innerHTML = '';
+			upwmsg.innerHTML = '';
+			nmmsg.innerHTML = '';
 			
 			var isOk = true
 			
@@ -80,8 +77,17 @@
 				frm.upw.focus()				
 				upwmsg.innerHTML = '비밀번호를 입력해 주세요.'
 				isOk = false
+			}			
+			if(frm.upw.value != frm.reupw.value) {
+				frm.upw.focus()				
+				upwmsg.innerHTML = '비밀번호를 확인해 주세요.'
+				isOk = false
 			}
-			
+			if(frm.nm.value == '') {
+				frm.nm.focus()				
+				nmmsg.innerHTML = '이름을 입력해 주세요.'
+				isOk = false
+			}
 			return isOk
 			
 		}

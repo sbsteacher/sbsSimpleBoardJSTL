@@ -24,6 +24,11 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uid = request.getParameter("uid");
 		String upw = request.getParameter("upw");
+		String joinSuccess = request.getParameter("joinSuccess");
+		
+		if(joinSuccess != null && joinSuccess.equals("1")) {
+			request.setAttribute("alert", "회원가입을 축하합니다.");
+		}
 		System.out.println("uid : " + uid);
 		System.out.println("upw : " + upw);
 		
