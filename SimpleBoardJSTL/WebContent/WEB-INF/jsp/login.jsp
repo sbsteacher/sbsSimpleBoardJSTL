@@ -15,6 +15,7 @@
 	#container {
 		height: 100%;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 	}
@@ -28,16 +29,16 @@
 	<div id="container">
 		<div>
 			<form id="frm" action="login" method="post" onsubmit="return check()">
-				<div>아이디 : <input type="text" name="uid" value=""></div>
+				<div>아이디 : <input type="text" name="uid" value="${uid}"></div>
 				<div id="uidmsg" class="f_red"></div>
 				<div>비밀번호 : <input type="password" name="upw"></div>
 				<div id="upwmsg" class="f_red"></div>
 				<div>
 					<input type="submit" value="로그인">
+					<button onclick="return goToJoin()">회원가입</button>
 				</div>
 			</form>
-		</div>
-		
+		</div>		
 		<c:if test="${msg != null}">
 		<div>
 			${msg}
@@ -45,6 +46,11 @@
 		</c:if>
 	</div>
 	<script>
+		function goToJoin() {
+			location.href='join'
+			return false
+		}
+	
 		function check() {
 			/*
 			var f_reds = document.getElementsByClassName('f_red')			

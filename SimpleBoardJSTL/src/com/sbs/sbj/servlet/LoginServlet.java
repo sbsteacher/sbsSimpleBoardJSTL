@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 				msg = "비밀번호가 맞지 않습니다.";
 				break;
 			}
-			
+			request.setAttribute("uid", uid);
 			request.setAttribute("msg", msg);
 			doGet(request, response);
 		}
