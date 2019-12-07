@@ -2,6 +2,7 @@ package com.sbs.sbj.dao;
 
 import static com.sbs.sbj.dao.CommonAPI.close;
 import static com.sbs.sbj.dao.CommonAPI.getCon;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import com.sbs.sbj.vo.BoardVO;
 
 public class BoardDAO {
 	
-	public final static int SHOW_BOARD_ITEM_COUNT = 10;
+	public final static int SHOW_BOARD_ITEM_COUNT = 5;
 	
 	//보드 리스트 가져오기
 	public static List<BoardVO> getBoardList(BoardVO param) {
@@ -69,4 +70,59 @@ public class BoardDAO {
 		
 		return list;
 	}
+	
+	//총 페이징 수 가져오기
+	public static int getPagingCnt() {
+		int result = 1;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT CEIL(COUNT(i_board) / ?) FROM t_board";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, SHOW_BOARD_ITEM_COUNT);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

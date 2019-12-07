@@ -34,3 +34,60 @@ footer {
 	padding: 10px;	
 	background-color: brown;
 }
+
+h1 {
+	font-size: 13px;
+}
+
+.center {
+		text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.aSelected {
+	color: red !important;
+	font-weight: bold;		
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid black;
+}
+
+table td, th {
+	border: 1px solid black;
+}
+
+.content {
+	cursor: pointer;
+}
+
+table tr.content:hover {
+	background-color: #CAD3C8;
+}
+
+table td {
+	height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

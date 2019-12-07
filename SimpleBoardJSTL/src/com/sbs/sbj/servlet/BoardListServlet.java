@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.sbj.Utils;
 import com.sbs.sbj.dao.BoardDAO;
@@ -18,7 +19,7 @@ public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession hs = request.getSession();
 		
 		request.setAttribute("title", "리스트");
 		request.setAttribute("target", "list");
@@ -27,12 +28,16 @@ public class BoardListServlet extends HttpServlet {
 		if(page != null) {		
 			intPage = Utils.parseStringToInt(page, 1);
 		}
+		hs.setAttribute("selectedPage", intPage);		
 		
 		BoardVO param = new BoardVO();
 		param.setPage(intPage);
 		
 		List<BoardVO> list = BoardDAO.getBoardList(param);
 		request.setAttribute("list", list);
+		
+		int pagingCnt = BoardDAO.getPagingCnt();
+		request.setAttribute("pagingCnt",  pagingCnt);
 		
 		request.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(request, response);
 	}

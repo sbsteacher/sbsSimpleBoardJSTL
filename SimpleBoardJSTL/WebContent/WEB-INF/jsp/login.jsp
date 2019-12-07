@@ -28,10 +28,11 @@
 <body>
 	<div id="container">
 		<div>
+			<c:set var="uid" value="mic" /> <!-- 작업 끝나면 지워야 함!! 로그인 편하게 한 것임! -->
 			<form id="frm" action="login" method="post" onsubmit="return check()">
 				<div>아이디 : <input type="text" name="uid" value="${uid}"></div>
 				<div id="uidmsg" class="f_red"></div>
-				<div>비밀번호 : <input type="password" name="upw"></div>
+				<div>비밀번호 : <input type="password" name="upw" value="1212"></div>
 				<div id="upwmsg" class="f_red"></div>
 				<div>
 					<input type="submit" value="로그인">
