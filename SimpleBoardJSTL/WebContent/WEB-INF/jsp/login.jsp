@@ -44,8 +44,10 @@
 			${msg}
 		</div>
 		</c:if>
+		${alert}
 	</div>
 	<script>
+		// TODO  해결!!!
 		<c:if test="${alert != null}">
 			alert(${alert})
 		</c:if>
