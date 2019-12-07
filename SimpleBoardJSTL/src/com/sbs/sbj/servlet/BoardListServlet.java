@@ -15,6 +15,7 @@ public class BoardListServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", "리스트");
+		request.setAttribute("target", "list");
 		/*
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/template.jsp");
 		rd.forward(request, response);

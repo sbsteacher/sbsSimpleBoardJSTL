@@ -17,7 +17,7 @@
 			</div>
 		</header>
 		<section>
-			section1
+			<jsp:include page="${target}.jsp" />
 		</section>
 		<footer>
 			footer

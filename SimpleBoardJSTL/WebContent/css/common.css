@@ -26,10 +26,11 @@ header > #menus {
 }
 
 section {
-	flex-grow: 1;	
+	flex-grow: 1;
+	padding: 10px;	
 }
 
 footer {
-	height: 30px;
+	padding: 10px;	
 	background-color: brown;
 }
