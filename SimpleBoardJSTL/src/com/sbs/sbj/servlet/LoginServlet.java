@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.sbj.dao.UserDAO;
 import com.sbs.sbj.vo.UserVO;
@@ -40,8 +41,10 @@ String joinSuccess = request.getParameter("joinSuccess");
 		
 		int result = UserDAO.login(param);
 		
-		if(result == 1) {
-			
+		if(result == 1) { //로그인 성공
+			HttpSession hs = request.getSession();
+			hs.setAttribute("loginUser", param);
+			response.sendRedirect("list");
 		} else {
 			String msg = null;
 			switch(result) {

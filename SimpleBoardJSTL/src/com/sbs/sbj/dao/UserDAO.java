@@ -30,10 +30,14 @@ public class UserDAO {
 			ps.setString(1, param.getUid());			
 			rs = ps.executeQuery();
 			if(rs.next()) {
+				
 				String dbUpw = rs.getString("upw");
 				String upw = Utils.encryptSHA256(param.getUpw());
 				
-				if(upw.equals(dbUpw)) {
+				if(upw.equals(dbUpw)) {					
+					String nm = rs.getString("nm"); //로그인 정보 세션에 담기 위해
+					param.setNm(nm);
+					param.setUpw(null);
 					result = 1;
 				} else {
 					result = 3;

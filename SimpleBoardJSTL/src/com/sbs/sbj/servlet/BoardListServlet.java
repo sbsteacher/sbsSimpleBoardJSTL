@@ -1,29 +1,43 @@
 package com.sbs.sbj.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sbs.sbj.Utils;
+import com.sbs.sbj.dao.BoardDAO;
+import com.sbs.sbj.vo.BoardVO;
+
 @WebServlet("/list")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		request.setAttribute("title", "리스트");
 		request.setAttribute("target", "list");
-		/*
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/template.jsp");
-		rd.forward(request, response);
-		*/
+		String page = request.getParameter("page");
+		int intPage = 1;
+		if(page != null) {		
+			intPage = Utils.parseStringToInt(page, 1);
+		}
+		
+		BoardVO param = new BoardVO();
+		param.setPage(intPage);
+		
+		List<BoardVO> list = BoardDAO.getBoardList(param);
+		request.setAttribute("list", list);
+		
 		request.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(request, response);
 	}
 
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
