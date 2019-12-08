@@ -228,6 +228,23 @@ public class BoardDAO {
 	public static int delComment(CommentVO param) {
 		int result = 0;
 		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " DELETE FROM t_comment WHERE i_comment = ? ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_comment());
+
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+		
 		return result;
 	}
 	

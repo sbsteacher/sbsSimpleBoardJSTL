@@ -40,7 +40,7 @@
 			<c:if test="${msg != null}">
 				<tr>
 					<td>메시지</td>
-					<td colspan="3">${msg }</td>
+					<td colspan="5">${msg }</td>
 				</tr>
 			</c:if>
 		</table>	
