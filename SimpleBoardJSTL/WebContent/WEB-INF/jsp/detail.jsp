@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:if test="${data == null}">
 	<div>
@@ -56,6 +57,33 @@
 			</div>
 		</form>
 	</div>
+	
+	<c:if test="${fn:length(cmts) > 0}">
+		<div>
+			<table>
+				<tr>
+					<th>번호</th>
+					<th>댓글</th>
+					<th>작성자</th>
+					<th>등록일시</th>
+					<th>삭제</th>
+				</tr>		
+				<c:forEach var="item" items="${cmts}">
+					<tr>
+						<td>${item.i_comment}</td>
+						<td>${item.cmt}</td>
+						<td>${item.nm}</td>
+						<td>${item.r_datetime}</td>
+						<td>
+							<c:if test="${loginUser.uid == item.uid }">
+								<button onclick="delCmt(${item.i_comment})">삭제</button>	
+							</c:if>							
+						</td>
+					</tr>
+				</c:forEach>	
+			</table>
+		</div>
+	</c:if>
 </c:if>
 
 

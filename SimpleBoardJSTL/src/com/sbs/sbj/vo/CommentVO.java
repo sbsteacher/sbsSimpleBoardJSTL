@@ -7,6 +7,14 @@ public class CommentVO {
 	private String r_datetime;
 	private String uid;
 	
+	private String nm;
+		
+	public String getNm() {
+		return nm;
+	}
+	public void setNm(String nm) {
+		this.nm = nm;
+	}
 	public int getI_comment() {
 		return i_comment;
 	}

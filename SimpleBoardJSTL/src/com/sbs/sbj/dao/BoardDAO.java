@@ -154,9 +154,72 @@ public class BoardDAO {
 		return result;
 	}
 	
+	//댓글 리스트 가져오기
+	public static List<CommentVO> getCommentList(BoardVO param) {
+		 List<CommentVO> list = new ArrayList();
+		 
+		 Connection con = null;
+		 PreparedStatement ps = null;
+		 ResultSet rs = null;
+		 
+		 String sql = " SELECT A.*, B.nm FROM t_comment A " + 
+		 		" INNER JOIN t_user B ON A.uid = B.uid " + 
+		 		" WHERE i_board = ? " +
+		 		" ORDER BY i_comment DESC ";
+		 
+		 try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int i_comment = rs.getInt("i_comment");
+				String cmt = rs.getString("cmt");
+				String r_datetime = rs.getString("r_datetime");
+				String uid = rs.getString("uid");
+				String nm = rs.getString("nm");
+								
+				CommentVO vo = new CommentVO();
+				vo.setI_comment(i_comment);
+				vo.setCmt(cmt);
+				vo.setR_datetime(r_datetime);
+				vo.setUid(uid);
+				vo.setNm(nm);
+				
+				list.add(vo);
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}		 
+		
+		return list;
+	}
+	
 	//댓글 등록
 	public static int regComment(CommentVO param) {
 		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " INSERT INTO t_comment (i_board, cmt, uid) "
+				+ " VALUES (?, ?, ?) ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.setString(2, param.getCmt());
+			ps.setString(3, param.getUid());
+			
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
 		
 		return result;
 	}

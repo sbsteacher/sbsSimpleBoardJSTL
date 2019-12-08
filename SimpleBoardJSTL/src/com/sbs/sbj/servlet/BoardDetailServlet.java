@@ -7,11 +7,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.sbj.Utils;
 import com.sbs.sbj.dao.BoardDAO;
 import com.sbs.sbj.vo.BoardVO;
 import com.sbs.sbj.vo.CommentVO;
+import com.sbs.sbj.vo.UserVO;
 
 @WebServlet("/detail")
 public class BoardDetailServlet extends HttpServlet {
@@ -23,7 +25,8 @@ public class BoardDetailServlet extends HttpServlet {
 		if(i_board != 0) {
 			BoardVO param = new BoardVO();
 			param.setI_board(i_board);
-			request.setAttribute("data", BoardDAO.getBoardDetail(param));
+			request.setAttribute("data", BoardDAO.getBoardDetail(param));			
+			request.setAttribute("cmts", BoardDAO.getCommentList(param));
 		}
 		
 		System.out.println("i_board : " + i_board);
@@ -47,6 +50,12 @@ public class BoardDetailServlet extends HttpServlet {
 		param.setI_board(i_board);
 						
 		if(i_comment == 0) { //댓글 등록
+			
+			HttpSession hs = request.getSession();
+			UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
+			
+			param.setUid(loginUser.getUid());
+			
 			param.setCmt(cmt);	
 			int result = BoardDAO.regComment(param);
 			
@@ -64,7 +73,7 @@ public class BoardDetailServlet extends HttpServlet {
 			if(result == 1) {
 				response.sendRedirect("detail?i_board="+i_board);
 			} else {
-				request.setAttribute("msg", "댓글을 등록할 수 없습니다.");
+				request.setAttribute("msg", "댓글을 삭제할 수 없습니다.");
 				doGet(request, response);
 			}
 		}
