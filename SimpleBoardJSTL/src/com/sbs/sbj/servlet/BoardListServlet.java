@@ -20,6 +20,7 @@ public class BoardListServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
+		Integer selectedPage = (Integer)hs.getAttribute("selectedPage");
 		
 		request.setAttribute("title", "리스트");
 		request.setAttribute("target", "list");
@@ -27,8 +28,11 @@ public class BoardListServlet extends HttpServlet {
 		int intPage = 1;
 		if(page != null) {		
 			intPage = Utils.parseStringToInt(page, 1);
+		} else if(selectedPage != null) {
+			intPage = selectedPage;
 		}
-		hs.setAttribute("selectedPage", intPage);		
+		
+		hs.setAttribute("selectedPage", intPage);
 		
 		BoardVO param = new BoardVO();
 		param.setPage(intPage);

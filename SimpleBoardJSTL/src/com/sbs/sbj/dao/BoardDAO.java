@@ -1,5 +1,6 @@
 package com.sbs.sbj.dao;
 
+
 import static com.sbs.sbj.dao.CommonAPI.close;
 import static com.sbs.sbj.dao.CommonAPI.getCon;
 
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import com.sbs.sbj.vo.BoardVO;
 import com.sbs.sbj.vo.CommentVO;
@@ -30,7 +32,7 @@ public class BoardDAO {
 				" FROM t_board A " + 
 				" INNER JOIN t_user B " + 
 				" ON A.uid = B.uid " + 
-				" ORDER BY A.grp DESC, A.seq " + 
+				" ORDER BY A.i_board DESC " + 
 				" LIMIT ?, ? "; 
 		
 		try {
@@ -116,8 +118,9 @@ public class BoardDAO {
 				" ) B " + 
 				" ON A.i_board = B.i_board " +
 				" INNER JOIN t_user C " + 
-				" ON A.uid = C.uid" + 
+				" ON A.uid = C.uid " + 
 				" WHERE A.i_board = ? ";
+			
 		
 		try {
 			con = getCon();
@@ -149,6 +152,29 @@ public class BoardDAO {
 			e.printStackTrace();
 		} finally {
 			close(con, ps, rs);
+		}
+		
+		return result;
+	}
+	
+	public static int delBoard(int i_board) {
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " DELETE FROM t_board WHERE i_board = ? ";
+				
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, i_board);
+
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
 		}
 		
 		return result;
@@ -225,30 +251,61 @@ public class BoardDAO {
 	}
 
 	//댓글 삭제
-	public static int delComment(CommentVO param) {
-		int result = 0;
-		
+	public static void delComment(CommentVO param) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
-		String sql = " DELETE FROM t_comment WHERE i_comment = ? ";
+		String sql = " DELETE FROM t_comment WHERE ";
+		
+		int i = 0;
+		
+		if(param.getI_board() > 0) {
+			sql += "i_board = ? ";
+			i = param.getI_board();
+		} else {
+			sql += "i_comment = ? ";
+			i = param.getI_comment();
+		}
 		
 		try {
 			con = getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, param.getI_comment());
+			ps.setInt(1, i);
 
-			result = ps.executeUpdate();
+			ps.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(con, ps);
 		}
-		
-		return result;
 	}
 	
+	public static int writeBoard(BoardVO param) {
+		int result = 0;
+				
+		String query = " INSERT INTO t_board (title, content, uid) "
+				+ " VALUES (?, ?, ?) ";
 	
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+		
+			ps.setString(1, param.getTitle());
+			ps.setString(2, param.getContent());
+			ps.setString(3, param.getUid());
+			
+			result = ps.executeUpdate();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+
+		return result;
+	}
 	
 	
 	

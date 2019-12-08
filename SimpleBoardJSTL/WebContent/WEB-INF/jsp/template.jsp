@@ -14,10 +14,10 @@
 <body>
 	<div id="container">
 		<header>
-			<div>Home</div>
+			<div><a href="list">Home</a></div>
 			<div id="menus">
-				<div>글쓰기</div>
-				<div>로그아웃</div>
+				<div><a href="write">글쓰기</a></div>
+				<div><a href="logout">로그아웃</a></div>
 			</div>
 		</header>
 		<section>
