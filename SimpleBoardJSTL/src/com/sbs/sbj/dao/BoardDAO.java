@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sbs.sbj.vo.BoardVO;
+import com.sbs.sbj.vo.CommentVO;
 
 public class BoardDAO {
 	
@@ -153,9 +154,19 @@ public class BoardDAO {
 		return result;
 	}
 	
-	
-	
-	
+	//댓글 등록
+	public static int regComment(CommentVO param) {
+		int result = 0;
+		
+		return result;
+	}
+
+	//댓글 삭제
+	public static int delComment(CommentVO param) {
+		int result = 0;
+		
+		return result;
+	}
 	
 	
 	
