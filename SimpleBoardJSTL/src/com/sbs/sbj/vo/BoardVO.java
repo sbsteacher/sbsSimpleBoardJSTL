@@ -13,7 +13,14 @@ public class BoardVO {
 	
 	private int page;
 	private String nm;
-		
+	private int fav_cnt;
+			
+	public int getFav_cnt() {
+		return fav_cnt;
+	}
+	public void setFav_cnt(int fav_cnt) {
+		this.fav_cnt = fav_cnt;
+	}
 	public String getNm() {
 		return nm;
 	}

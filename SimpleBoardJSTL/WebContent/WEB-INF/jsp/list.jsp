@@ -18,6 +18,10 @@
 		color: red;
 		font-weight: bold;
 	}
+	
+	.hands {
+		cursor: pointer;
+	}
 
 </style>
 <c:choose>
@@ -33,7 +37,7 @@
 				<th>조회수</th>
 			</tr>		
 			<c:forEach var="item" items="${list}">
-				<tr>
+				<tr class="hands" onclick="goToDetail(${item.i_board})">
 					<td class="center">${item.i_board}</td>
 					<td>${item.title }</td>
 					<td class="center">${item.regdatetime }</td>
@@ -54,13 +58,20 @@
 							<a href="list?page=${page}">${page}</a>
 						</div>
 					</c:otherwise>
-				</c:choose>
-				
+				</c:choose>				
 			</c:forEach>
 		</div>
 		</c:if>
 	</c:otherwise>
 </c:choose>
+<script>
+	function goToDetail(i_board) {
+		console.log('i_board : ' + i_board)		
+		location.href = 'detail?i_board=' + i_board
+	}
+</script>
+
+
 
 
 

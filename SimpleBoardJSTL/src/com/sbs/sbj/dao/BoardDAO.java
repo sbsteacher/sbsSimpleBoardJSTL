@@ -100,7 +100,58 @@ public class BoardDAO {
 		return result;
 	}
 	
-	
+	public static BoardVO getBoardDetail(BoardVO param) {
+		BoardVO result = null;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT A.*, B.fav_cnt, C.nm FROM t_board A "
+				+ " LEFT JOIN ( " + 
+				"	SELECT i_board, COUNT(i_board) AS fav_cnt FROM t_favorite " + 
+				"	WHERE i_board = ? " + 
+				"	GROUP BY i_board " + 
+				" ) B " + 
+				" ON A.i_board = B.i_board " +
+				" INNER JOIN t_user C " + 
+				" ON A.uid = C.uid" + 
+				" WHERE A.i_board = ? ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.setInt(2, param.getI_board());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String regdatetime = rs.getString("regdatetime");
+				int cnt = rs.getInt("cnt");
+				int fav_cnt = rs.getInt("fav_cnt");
+				String nm = rs.getString("nm");
+				String uid = rs.getString("uid");
+				
+				result = new BoardVO();
+				result.setI_board(param.getI_board());
+				result.setTitle(title);
+				result.setContent(content);
+				result.setRegdatetime(regdatetime);
+				result.setCnt(cnt);
+				result.setFav_cnt(fav_cnt);
+				result.setNm(nm);
+				result.setUid(uid);
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return result;
+	}
 	
 	
 	
